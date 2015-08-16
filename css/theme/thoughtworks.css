@@ -37,9 +37,6 @@ section.title h3 {
 section.h4 {
   color: #b5b935; }
 
-img.no-border {
-  border: 0; }
-
 li {
   list-style: none; }
 
@@ -245,6 +242,9 @@ body {
   background: rgba(255, 255, 255, 0.12);
   border: 4px solid #25383c;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.15); }
+
+.reveal section img.no-border {
+  border: 0; }
 
 .reveal a img {
   -webkit-transition: all 0.15s linear;
