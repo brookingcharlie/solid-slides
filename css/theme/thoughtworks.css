@@ -150,9 +150,9 @@ body {
   position: relative;
   width: 70%;
   margin: 20px auto;
-  padding: 5px;
+  padding: 10px;
   font-style: italic;
-  background: rgba(255, 255, 255, 0.05);
+  background: rgba(225, 225, 225, 0.5);
   box-shadow: 0px 0px 0px rgba(0, 0, 0, 0.2); }
 
 .reveal blockquote p:first-child, .reveal blockquote p:last-child {
