@@ -48,7 +48,8 @@
       </section>
 
       <section>
-        <h2>Task 1</h2>
+      <section>
+        <h2>Task 1: Simple app</h2>
         <div style="display: inline-block; width: 35%; vertical-align: top;">
           <h4>Input</h4>
           <pre><code data-trim class="nohighlight">
@@ -75,7 +76,7 @@ Total for 4 items                  55.48
       </section>
 
       <section>
-        <h2>Task 1 test</h2>
+        <h2>Simple app test</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 @Test
 public void testSingle() throws Exception {
@@ -100,7 +101,7 @@ public void testSingle() throws Exception {
       </section>
 
       <section>
-        <h2>Task 1 code</h2>
+        <h2>Simple app code</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 public static void run(Reader reader, Writer writer) throws IOException {
     try (
@@ -121,6 +122,18 @@ public static void run(Reader reader, Writer writer) throws IOException {
     }
 }
         </code></pre>
+      </section>
+      </section>
+
+      <section>
+        <h2 style="font-size: 1.5em;">Single Responsibility Principle</h2>
+        <blockquote>A class should have one, and only one, reason to change.</blockquote>
+        <p>Responsibilities of our <code>App</code> class?</p>
+        <ol>
+          <li>Reads formatted input text</li>
+          <li>Calculates total price (well, it will)</li>
+          <li>Writes formatted output text</li>
+        </ol>
       </section>
     </div>
   </div>
