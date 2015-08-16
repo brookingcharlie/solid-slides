@@ -135,6 +135,187 @@ public static void run(Reader reader, Writer writer) throws IOException {
           <li>Writes formatted output text</li>
         </ol>
       </section>
+
+      <section>
+      <section>
+        <h2>Task 2: App modules</h2>
+        <p>Separate the <code>App</code> class's responsibilities:</p>
+        <ol>
+          <li>Model basket concept as domain class</li>
+          <li>Make basket responsible for calculating total</li>
+          <li>Read/write text formats in separate class</li>
+        </ol>
+        <pre><code data-trim class="java">
+public class Basket {
+    public void addItem(Item item) {...}
+    public Item getItem(int i) {...}
+    public int getCount() {...}
+    public BigDecimal getTotal() {...}
+}
+
+public static void run(Reader input, Writer output) throws IOException {
+    Basket basket = new Basket();
+    new BasketReader().read(basket, input);
+    new BasketWriter().write(basket, output);
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket test</h2>
+        <p>Test adding/getting items, count, and total.</p>
+        <pre><code data-trim class="java">
+@Test
+public void testSingleItem() {
+    Basket basket = new Basket();
+    basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
+    assertThat(basket.getCount(), is(equalTo(1)));
+    assertThat(basket.getItem(0).getProduct(),
+        is(equalTo("Pizza - Pepperoni")));
+    assertThat(basket.getItem(0).getPrice(),
+        is(equalTo(new BigDecimal("12.99"))));
+    assertThat(basket.getTotal(),
+        is(equalTo(new BigDecimal("12.99"))));
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket code</h2>
+        <pre><code data-trim class="java">
+public class Basket {
+    private final ArrayList&lt;Item&gt; items;
+
+    public Basket() { this.items = new ArrayList&lt;Item&gt;(); }
+    public void addItem(Item item) { items.add(item); }
+    public Item getItem(int i) { return items.get(i); }
+    public int getCount() { return items.size(); }
+
+    public BigDecimal getTotal() {
+        return items.stream()
+            .map(i -&gt; i.getPrice())
+            .reduce((a, b) -&gt; a.add(b))
+            .orElse(new BigDecimal("0.00"));
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket reader test</h2>
+        <p>Verify that reader adds items to the basket.</p>
+        <pre><code data-trim class="java">
+@Test
+public void testSingleItem() throws IOException {
+    Basket basket = mock(Basket.class);
+    StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
+    new BasketReader().read(basket, input);
+
+    ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
+    verify(basket, times(1)).addItem(item.capture());
+    assertThat(item.getValue().getProduct(),
+        is(equalTo("Pizza - Pepperoni")));
+    assertThat(item.getValue().getPrice(),
+        is(equalTo(new BigDecimal("12.99"))));
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket reader code</h2>
+        <pre><code data-trim class="java">
+public void read(Basket basket, Reader input) throws IOException {
+    try (
+        BufferedReader bufferedReader = new BufferedReader(input);
+    ) {
+        bufferedReader.lines()
+            .map(line -&gt; line.split(","))
+            .map(parts -&gt; new Item(parts[0], new BigDecimal(parts[1])))
+            .forEach(item -&gt; basket.addItem(item));
+    }
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket writer test</h2>
+        <p>Compare actual vs. expected output.</p>
+        <pre><code data-trim class="java">
+@Test
+public void testSingleItem() throws IOException {
+    Basket basket = new Basket();
+    basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
+    StringWriter output = new StringWriter();
+    new BasketWriter().write(basket, output);
+
+    String expectedOutput =
+        "*************** RECEIPT ****************\n" +
+        "\n" +
+        "Pizza - Pepperoni                  12.99\n" +
+        "                                --------\n" +
+        "Total for 1 items                  12.99\n" +
+        "                                ========\n";
+    assertThat(output.toString(), is(equalTo(expectedOutput)));
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket writer code</h2>
+        <pre style="font-size: 0.54em;"><code data-trim class="java">
+public void write(AccessibleBasket basket, Writer output) throws IOException {
+  try (PrintWriter printer = new PrintWriter(output)) {
+    printer.println("*************** RECEIPT ****************");
+    printer.println();
+    for (int i = 0; i &lt; basket.getCount(); i++) {
+      printer.println(String.format("%-32s%8.2f",
+        basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
+    }
+    printer.println(String.format("%-32s%8s", "", "--------"));
+    String total = String.format("Total for %d items", basket.getCount());
+    printer.println(String.format("%-32s%8.2f", total, basket.getTotal()));
+    printer.println(String.format("%-32s%8s", "", "========"));
+  }
+}
+        </code></pre>
+      </section>
+      </section>
+
+      <section>
+      <section>
+        <h2 style="font-size: 1.40em;">Interface Segregation Principle</h2>
+        <blockquote>Make fine grained interfaces that are client specific.</blockquote>
+        <p>Consider the clients of our <code>Basket</code> class:</p>
+        <ul>
+          <li><code>BasketReader</code> only needs <code>addItem</code></li>
+          <li><code>BasketWriter</code> needs getters (item, count, total)</code></li>
+          <li>...but it shouldn't be able to call <code>addItem</code></li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Segregate interfaces</h2>
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
+public interface MutatableBasket {
+    void addItem(Item item);
+}
+public interface AccessibleBasket {
+    Item getItem(int i);
+    int getCount();
+    BigDecimal getTotal();
+}
+public class Basket implements MutatableBasket, AccessibleBasket {...}
+
+public class BasketReader {
+    public void read(MutatableBasket basket, Reader input) {...}
+}
+public class BasketWriter {
+    public void write(AccessibleBasket basket, Writer output) {...}
+}
+        </code></pre>
+      </section>
+      </section>
+
     </div>
   </div>
   <script src="lib/js/head.min.js"></script>
