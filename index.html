@@ -316,6 +316,35 @@ public class BasketWriter {
       </section>
       </section>
 
+      <section>
+        <h2>Open-Closed Principle</h2>
+        <blockquote>Software entities should be open for extension, but closed for modification.</blockquote>
+        <p><b>Problem:</b> cannot extend a class without modifying it.</p>
+        <ul>
+          <li>changes to a class result in...</li>
+          <li>mass changes to dependent classes</li>
+        </ul>
+        <p><b>Solution:</b> design fixed classes with extension points.</p>
+        <ul>
+          <li>extend class behaviour by...</li>
+          <li>adding code instead of modifying it</li>
+        </ul>
+        <!--
+          "You should be able to extend a classes behavior without modifying it."
+
+          "When a single change to a program results in a cascade of changes to dependent
+          modules, that program exhibits the undesirable attributes that we have come to
+          associate with “bad” design. The program becomes fragile, rigid, unpredictable
+          and unreusable. The open- closed principle attacks this in a very straightforward
+          way. It says that you should design modules that never change. When requirements
+          change, you extend the behavior of such modules by adding new code, not by
+          changing old code that already works."
+
+          http://www.objectmentor.com/resources/articles/ocp.pdf
+        -->
+        <!-- http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod -->
+      </section>
+
     </div>
   </div>
   <script src="lib/js/head.min.js"></script>
