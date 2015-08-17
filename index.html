@@ -348,11 +348,51 @@ public class BasketWriter {
       <section>
         <h2 style="font-size: 1.55em;">Liskov Substitution Principle</h2>
         <blockquote>
-          Derived classes must be substitutable for their base classes.
+          Functions that reference base classes must be able to use
+          their derived classes without knowing it.
         </blockquote>
+        <div style="display: inline-block; width: 45%;">
+          <pre style="font-size: 0.52em;"><code data-trim class="java">
+abstract class Shape {
+}
+class Rectangle extends Shape {
+  void drawRectangle() {...}
+}
+class Square extends Shape {
+  void drawSquare() {...}
+}
+class App {
+  void render(Shape s) {
+    if (s instanceof Rectangle) {
+      shape.drawRectangle();
+    }
+    // ...
+  }
+}
+          </code></pre>
+        </div>
+        <div style="display: inline-block; width: 45%;">
+          <pre style="font-size: 0.52em;"><code data-trim class="java">
+abstract class Shape {
+  abstract void draw();
+}
+class Rectangle extends Shape {
+  void draw() {...}
+}
+class Square extends Shape {
+  void draw() {...}
+}
+
+
+class App {
+  void render(Shape shape) {
+    shape.draw();
+  }
+}
+          </code></pre>
+        </div>
         <!--
-          "Functions that use references to base classes must be able to use objects
-          of derived classes without knowing it." (follow link to PDF)
+          Derived classes must be substitutable for their base classes.
 
           http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod
         -->
