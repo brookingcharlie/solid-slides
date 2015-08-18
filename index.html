@@ -389,9 +389,9 @@ public class SaleBasket extends Basket {
   }
 }
         </code></pre>
-        <pre><code class="java">       String totalDescription = String.format("Total for %d items", basket.getCount());
+        <pre><code class="diff">       String totalDescription = String.format("Total for %d items", basket.getCount());
        printWriter.println(String.format("%-32s%8.2f", totalDescription, basket.getTotal()));
-       printWriter.println(String.format("%-32s%8s", "", "========"));
+       printWriter.println(String.format("%-32s%8s", "", "====...."));
 +      if (basket instanceof SaleBasket) {
 +        printWriter.println("Includes discount of 10%");
 +      }
@@ -402,19 +402,19 @@ public class SaleBasket extends Basket {
       <section>
         <h2>Another sale basket</h2>
         <p><code>Basket</code> vs <code>SaleBasket</code></p>
-        <pre><code data-trim class="java">
+        <pre><code data-trim class="diff">
 +    public String getMessage() {
 +        return null;
 +    }
         </code></pre>
-        <pre><code data-trim class="java">
+        <pre><code data-trim class="diff">
 +    @Override
 +    public String getMessage() {
 +        return "Includes discount of 10%";
 +    }
         </code></pre>
         <p><code>BasketWriter.java</code></p>
-        <pre><code data-trim class="java">
+        <pre><code data-trim class="diff">
 -    if (basket instanceof SaleBasket) {
 -      printWriter.println("Includes discount of 10%");
 -    }
@@ -467,13 +467,13 @@ public class SaleBasket extends Basket {
       <section>
         <h2>Our extensible basket</h2>
         <p><code>Basket</code> vs <code>SaleBasket</code></p>
-        <pre><code data-trim class="java">
+        <pre><code data-trim class="diff">
 +  @Override
 +  public List&lt;Item&gt; getExtraItems() {
 +    return Collections.emptyList();
 +  }
         </code></pre>
-        <pre><code data-trim class="java">
+        <pre><code data-trim class="diff">
 +  @Override
 +  public List&lt;Item&gt; getExtraItems() {
 +    BigDecimal discount = super.getTotal().multiply(new BigDecimal("-0.1")).setScale(2);
@@ -481,7 +481,7 @@ public class SaleBasket extends Basket {
 +  }
         </code></pre>
         <p><code>BasketWriter.java</code></p>
-        <pre><code class="java">       for (int i = 0; i &lt; basket.getCount(); i++) {
+        <pre><code class="diff">       for (int i = 0; i &lt; basket.getCount(); i++) {
          printWriter.println(String.format("%-32s%8.2f", basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
        }
 +      for (Item item : basket.getExtraItems()) {
@@ -527,7 +527,7 @@ public interface Basket implements MutatableBasket, AccessibleBasket {
 
       <section>
       <section>
-        <h2>Injecting dependencies</h2>
+        <h2>Injected dependencies</h2>
         <pre><code data-trim class="diff">
  public class App {
 +  private final BasketReader inputReader;
