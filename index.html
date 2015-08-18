@@ -317,35 +317,6 @@ public class BasketWriter {
       </section>
 
       <section>
-        <h2>Open-Closed Principle</h2>
-        <blockquote>Software entities should be open for extension, but closed for modification.</blockquote>
-        <p><b>Problem:</b> cannot extend a class without modifying it.</p>
-        <ul>
-          <li>changes to a class result in...</li>
-          <li>mass changes to dependent classes</li>
-        </ul>
-        <p><b>Solution:</b> design fixed classes with extension points.</p>
-        <ul>
-          <li>extend class behaviour by...</li>
-          <li>adding code instead of modifying it</li>
-        </ul>
-        <!--
-          "You should be able to extend a classes behavior without modifying it."
-
-          "When a single change to a program results in a cascade of changes to dependent
-          modules, that program exhibits the undesirable attributes that we have come to
-          associate with “bad” design. The program becomes fragile, rigid, unpredictable
-          and unreusable. The open- closed principle attacks this in a very straightforward
-          way. It says that you should design modules that never change. When requirements
-          change, you extend the behavior of such modules by adding new code, not by
-          changing old code that already works."
-
-          http://www.objectmentor.com/resources/articles/ocp.pdf
-        -->
-        <!-- http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod -->
-      </section>
-
-      <section>
         <h2 style="font-size: 1.55em;">Liskov Substitution Principle</h2>
         <blockquote>
           Functions that reference base classes must be able to use
@@ -450,6 +421,85 @@ public class SaleBasket extends Basket {
 +    if (basket.getMessage() != null) {
 +      printWriter.println(basket.getMessage());
 +    }
+        </code></pre>
+      </section>
+      </section>
+
+      <section>
+        <h2>Open-Closed Principle</h2>
+        <blockquote>Software entities should be open for extension, but closed for modification.</blockquote>
+        <p><b>Problem:</b> cannot extend a class without modifying it.</p>
+        <ul>
+          <li>changes to a class result in...</li>
+          <li>mass changes to dependent classes</li>
+        </ul>
+        <p><b>Solution:</b> design fixed classes with extension points.</p>
+        <ul>
+          <li>extend class behaviour by...</li>
+          <li>adding code instead of modifying it</li>
+        </ul>
+        <!--
+          "You should be able to extend a classes behavior without modifying it."
+
+          "When a single change to a program results in a cascade of changes to dependent
+          modules, that program exhibits the undesirable attributes that we have come to
+          associate with “bad” design. The program becomes fragile, rigid, unpredictable
+          and unreusable. The open- closed principle attacks this in a very straightforward
+          way. It says that you should design modules that never change. When requirements
+          change, you extend the behavior of such modules by adding new code, not by
+          changing old code that already works."
+
+          http://www.objectmentor.com/resources/articles/ocp.pdf
+        -->
+        <!-- http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod -->
+      </section>
+
+      <section>
+      <section>
+        <h2>Task 5: Extensible basket</h2>
+        <blockquote>The basket to end all baskets</blockquote>
+        <ul>
+          <li>What else could we want in a basket?</li>
+          <li>Maybe the discount should be a line item.</li>
+          <li>What if future baskets need extra line items?</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Our extensible basket</h2>
+        <p><code>Basket</code> vs <code>SaleBasket</code></p>
+        <pre><code data-trim class="java">
++  @Override
++  public List&lt;Item&gt; getExtraItems() {
++    return Collections.emptyList();
++  }
+        </code></pre>
+        <pre><code data-trim class="java">
++  @Override
++  public List&lt;Item&gt; getExtraItems() {
++    BigDecimal discount = super.getTotal().multiply(new BigDecimal("-0.1")).setScale(2);
++    return asList(new Item("Discount", discount));
++  }
+        </code></pre>
+        <p><code>BasketWriter.java</code></p>
+        <pre><code class="java">       for (int i = 0; i &lt; basket.getCount(); i++) {
+         printWriter.println(String.format("%-32s%8.2f", basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
+       }
++      for (Item item : basket.getExtraItems()) {
++        printWriter.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
++      }</code></pre>
+      </section>
+      <section>
+        <h2>Our extensible basket</h2>
+        <p><code>Basket</code> vs <code>SaleBasket</code></p>
+        <pre><code data-trim class="java">
+public interface Basket implements MutatableBasket, AccessibleBasket {
+  public void addItem(Item item) {...}
+  public Item getItem(int i) {...}
+  public int getCount() {...}
+  public BigDecimal getTotal() {...}
+  public List&lt;Item&gt; getExtraItems() {...}
+  public String getMessage() {...}
+}
         </code></pre>
       </section>
       </section>
