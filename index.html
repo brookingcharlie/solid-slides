@@ -282,7 +282,6 @@ public void write(AccessibleBasket basket, Writer output) throws IOException {
       </section>
 
       <section>
-      <section>
         <h2 style="font-size: 1.40em;">Interface Segregation Principle</h2>
         <blockquote>Make fine grained interfaces that are client specific.</blockquote>
         <p>Consider the clients of our <code>Basket</code> class:</p>
@@ -294,7 +293,8 @@ public void write(AccessibleBasket basket, Writer output) throws IOException {
       </section>
 
       <section>
-        <h2>Segregate interfaces</h2>
+      <section>
+        <h2>Segregated interfaces</h2>
         <pre style="font-size: 0.52em;"><code data-trim class="java">
 public interface MutatableBasket {
     void addItem(Item item);
