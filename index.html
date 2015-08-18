@@ -397,14 +397,58 @@ class App {
           http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod
         -->
       </section>
+
       <section>
         <h2>Task 3: Sale basket</h2>
+        <blockquote>Everything must go!</blockquote>
+        <ul>
+          <li>Give all customers 10% discount</li>
+          <li>Print discount message on receipt</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>A sale basket</h2>
         <pre><code data-trim class="java">
-// when sale is on, give customer 10% discount and print message on receipt
-// create SaleBasket extending Basket that overrides getTotal()
-// modify BasketWriter: add message based on if(b instanceof SaleBasket)
-// explain that this violates liskov substitution principle
-// abstract to getMessage() on Basket and changing BasketWriter
+public class SaleBasket extends Basket {
+  @Override
+  public BigDecimal getTotal() {
+    return super.getTotal().multiply(new BigDecimal("0.9")).setScale(2);
+  }
+}
+        </code></pre>
+        <pre><code class="java">       String totalDescription = String.format("Total for %d items", basket.getCount());
+       printWriter.println(String.format("%-32s%8.2f", totalDescription, basket.getTotal()));
+       printWriter.println(String.format("%-32s%8s", "", "========"));
++      if (basket instanceof SaleBasket) {
++        printWriter.println("Includes discount of 10%");
++      }
+     }
+   }</code></pre>
+      </section>
+
+      <section>
+        <h2>Another sale basket</h2>
+        <p><code>Basket</code> vs <code>SaleBasket</code></p>
+        <pre><code data-trim class="java">
++    public String getMessage() {
++        return null;
++    }
+        </code></pre>
+        <pre><code data-trim class="java">
++    @Override
++    public String getMessage() {
++        return "Includes discount of 10%";
++    }
+        </code></pre>
+        <p><code>BasketWriter.java</code></p>
+        <pre><code data-trim class="java">
+-    if (basket instanceof SaleBasket) {
+-      printWriter.println("Includes discount of 10%");
+-    }
++    if (basket.getMessage() != null) {
++      printWriter.println(basket.getMessage());
++    }
         </code></pre>
       </section>
 
