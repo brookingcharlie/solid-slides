@@ -297,6 +297,11 @@ public void write(AccessibleBasket basket, Writer output) throws IOException {
           <li><code>BasketWriter</code> needs getters (item, count, total)</code></li>
           <li>...but it shouldn't be able to call <code>addItem</code></li>
         </ul>
+        <!--
+          - Fat interface imposes implementation burden on author of class ahering to interface.
+          - Fat interface is confusing for use of the class - which method do I call?
+          - Fat interface could lead to user of class calling methods that it shouldn't.
+        -->
       </section>
 
       <section>
