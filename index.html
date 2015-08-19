@@ -642,6 +642,16 @@ public interface Basket implements MutatableBasket, AccessibleBasket {
       </section>
 
       <section>
+        <h2>General design principles</h2>
+        <ul>
+          <li>Do only what you need to do (YAGNI)</li>
+          <li>Aim for high cohesion and low coupling</li>
+          <li>Low cohesion means module does too much, hard to maintain</li>
+          <li>High coupling means high rigidity and fragility</li>
+        </ul>
+      </section>
+
+      <section>
         <h2>Why BigDecimal?</h2>
         <pre><code data-trim class="java">
 public class DecimalTest {
