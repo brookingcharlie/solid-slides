@@ -449,9 +449,25 @@ public class SaleBasket extends Basket {
           change, you extend the behavior of such modules by adding new code, not by
           changing old code that already works."
 
+          "Create abstractions that are fixed and yet represent an unbounded group of possible behaviors.
+          A module depending on an abstraction can be fixed, yet the behavior of that module can be extended
+          by creating new derivatives of the abstraction."
+
+          ## Benefits
+
+          - Application will be more robust because we are not changing already tested class.
+          - Flexible because we can easily accommodate new requirements.
+          - Easy to test and less error prone.
+
+          ## Examples
+
+          - Abstract factory pattern: create something whose type isn't known until runtime.
+          - Template method pattern: set of steps is the same, but implementation of steps differs.
+          - Decorator pattern: recursively extend behaviour via composition instead of inheritance.
+
           http://www.objectmentor.com/resources/articles/ocp.pdf
+          http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod
         -->
-        <!-- http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod -->
       </section>
 
       <section>
