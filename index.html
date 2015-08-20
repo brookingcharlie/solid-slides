@@ -584,27 +584,41 @@ for (Item item : basket.getItems()) {
 
       <section>
       <section>
-        <h2>Injected dependencies</h2>
+        <h2>Task 6: App dependencies</h2>
+        <p>Our app depends on several concrete classes.</p>
+        <ul>
+          <li>Creates <code>BasketReader</code>/<code>Writer</code> and <code>Basket</code></li>
+          <li>Goal: depend on reader/writer abstractions</li>
+          <li>Goal: use a <code>SaleBasket</code> on weekends</li>
+        </ul>
         <pre><code data-trim class="java">
 public class App {
   public void run(Reader input, Writer output) throws IOException {
     BasketReader inputReader = new BasketReader();
     BasketWriter outputWriter = new BasketWriter();
-    // ...
+    Basket basket = new Basket();
+    inputReader.read(basket, input);
+    outputWriter.write(basket, output);
   }
 }</code></pre>
-        <pre><code data-trim class="java">
+      </section>
+      <section>
+        <h2>Injecting dependencies</h2>
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
 public class App {
+  private final IBasketFactory basketFactory;
   private final IBasketReader inputReader;
   private final IBasketWriter outputWriter;
 
-  public App(IBasketReader inputReader, IBasketWriter outputWriter) {
+  public App(IBasketFactory basketFactory, IBasketReader inputReader,
+             IBasketWriter outputWriter) {
+    this.basketFactory = basketFactory;
     this.inputReader = inputReader;
     this.outputWriter = outputWriter;
   }
 
   public void run(Reader input, Writer output) throws IOException {
-    Basket basket = new Basket();
+    Basket basket = basketFactory.createBasket();
     inputReader.read(basket, input);
     outputWriter.write(basket, output);
   }
@@ -612,20 +626,48 @@ public class App {
         </code></pre>
       </section>
       <section>
-        <h2>Injecting dependencies</h2>
-        <pre><code data-trim class="diff">
---- a/src/test/java/com/thoughtworks/checkout/AppTest.java
-+++ b/src/test/java/com/thoughtworks/checkout/AppTest.java
-@@ -25,7 +25,8 @@ public class AppTest {
-       StringReader reader = new StringReader(input);
-       StringWriter writer = new StringWriter();
-     ) {
--      App.run(reader, writer);
-+      App app = new App(new BasketReader(), new BasketWriter());
-+      app.run(reader, writer);
-       assertThat(writer.toString(), is(equalTo(expectedOutput)));
-     }
-   }
+        <h2>Basket factory</h2>
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
+public interface BasketFactory {
+  Basket createBasket();
+}
+        </code></pre>
+
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
+public class WeekendSaleBasketFactory implements BasketFactory {
+  @Override
+  public Basket createBasket() {
+    LocalDate date = LocalDate.now();
+    if (date.getDayOfWeek() == SATURDAY || date.getDayOfWeek() == SUNDAY) {
+      return new SaleBasket();
+    }
+    else {
+      return new Basket();
+    }
+  }
+}
+        </code></pre>
+      </section>
+      <section>
+        <h2>Basket factory 2</h2>
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
+public class WeekendSaleBasketFactory implements BasketFactory {
+  private LocalDate date;
+
+  public WeekendSaleBasketFactory(LocalDate date) {
+    this.date = date;
+  }
+
+  @Override
+  public Basket createBasket() {
+    if (date.getDayOfWeek() == SATURDAY || date.getDayOfWeek() == SUNDAY) {
+      return new SaleBasket();
+    }
+    else {
+      return new Basket();
+    }
+  }
+}
         </code></pre>
       </section>
       </section>
