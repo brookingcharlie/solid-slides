@@ -138,7 +138,7 @@ public static void run(Reader reader, Writer writer) throws IOException {
           readability
           testability: unit carrying out multiple tasks is difficult to test
           reusability
-          
+
           example: mixing text parsing, query processing, and output
         -->
       </section>
@@ -597,12 +597,12 @@ public class App {
 public class App {
   private final IBasketReader inputReader;
   private final IBasketWriter outputWriter;
-  
+
   public App(IBasketReader inputReader, IBasketWriter outputWriter) {
     this.inputReader = inputReader;
     this.outputWriter = outputWriter;
   }
-  
+
   public void run(Reader input, Writer output) throws IOException {
     Basket basket = new Basket();
     inputReader.read(basket, input);
