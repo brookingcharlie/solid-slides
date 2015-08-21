@@ -36,7 +36,7 @@
       </section>
 
       <section>
-        <h2>Good design</h2>
+        <h2>What is good design?</h2>
         <p>The quality of a design can be subjective</p>
         <p>But we can agree on some values:</p>
         <ul>
@@ -44,7 +44,57 @@
           <li>Simplicity</li>
           <li>Flexibility</li>
         </ul>
-        <p>Pressures on a system will naturally lead to design.</p>
+        <p>(we assume correctness, performance, etc.)</p>
+      </section>
+
+      <section>
+        <h2>Motivation for design</h2>
+        <p>Competitive advantage &ndash; avoids business risk</p>
+        <ul>
+          <li>Manage complexity of a system</li>
+          <li>Increase speed of changes</li>
+          <li>Reduce cost and risk of changes</li>
+          <li>Enable software reuse</li>
+        </ul>
+      </section>
+
+      <section>
+        <h2>Symptoms of bad design</h2>
+        <ul>
+          <li><b>Rigid</b>: difficult to change, even in simple ways.</li>
+          <li><b>Fragile</b>: breaks in many places when changed.</li>
+          <li><b>Immobile</b>: inability to reuse between projects.</li>
+          <li><b>Viscous</b>: difficult to add design-preserving code.</li>
+          <!-- Viscous in the sense of resisting change - like viscous liquid. -->
+        </ul>
+      </section>
+
+      <section>
+        <h2>Our most basic principles</h2>
+        <h4>High cohesion</h4>
+        <p>Low cohesion means module does too much, hard to maintain</p>
+        <h4>Low coupling</h4>
+        <p>High coupling means high rigidity and fragility</p>
+      </section>
+
+      <section>
+        <h2>General design principles</h2>
+        <ul>
+          <li>Keep it simple, stupid (KISS)</li>
+          <li>You ain't gonna need it (YAGNI)</li>
+          <!--
+            "Always implement things when you actually need them, never when you just
+            forsee that you need them." - Ron Jeffries
+          -->
+          <li>Don't repeat yourself (DRY)</li>
+          <!--
+            Every piece of knowledge must have a single, unambiguous, authoritative
+            representation within a system.
+
+            "Refactoring has as a primary objective getting each piece of functionality
+            to exist in exactly on place in the software." - Ron Jeffries
+          -->
+        </ul>
       </section>
 
       <section>
@@ -732,16 +782,6 @@ public class WeekendSaleBasketFactory implements BasketFactory {
 
           http://www.davesquared.net/2009/01/introduction-to-solid-principles-of-oo.html
         -->
-      </section>
-
-      <section>
-        <h2>General design principles</h2>
-        <ul>
-          <li>Do only what you need to do (YAGNI)</li>
-          <li>Aim for high cohesion and low coupling</li>
-          <li>Low cohesion means module does too much, hard to maintain</li>
-          <li>High coupling means high rigidity and fragility</li>
-        </ul>
       </section>
 
       <section>
