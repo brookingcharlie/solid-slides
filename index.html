@@ -99,22 +99,22 @@ public class App {
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 @Test
 public void testSingle() throws Exception {
-    String input =
-        "Pizza - Pepperoni,12.99";
-    String expectedOutput =
-        "*************** RECEIPT ****************\n" +
-        "\n" +
-        "Pizza - Pepperoni                  12.99\n" +
-        "                                --------\n" +
-        "Total                              12.99\n" +
-        "                                ========\n";
-    try (
-        StringReader reader = new StringReader(input);
-        StringWriter writer = new StringWriter();
-    ) {
-        App.run(reader, writer);
-        assertThat(writer.toString(), is(equalTo(expectedOutput)));
-    }
+  String input =
+    "Pizza - Pepperoni,12.99";
+  String expectedOutput =
+    "*************** RECEIPT ****************\n" +
+    "\n" +
+    "Pizza - Pepperoni                  12.99\n" +
+    "                                --------\n" +
+    "Total                              12.99\n" +
+    "                                ========\n";
+  try (
+    StringReader reader = new StringReader(input);
+    StringWriter writer = new StringWriter();
+  ) {
+    App.run(reader, writer);
+    assertThat(writer.toString(), is(equalTo(expectedOutput)));
+  }
 }
         </code></pre>
       </section>
@@ -123,22 +123,22 @@ public void testSingle() throws Exception {
         <h2>Simple app code</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 public static void run(Reader reader, Writer writer) {
-    try (
-        BufferedReader bufferedReader = new BufferedReader(reader);
-        PrintWriter printWriter = new PrintWriter(writer);
-    ) {
-        String line = bufferedReader.readLine();
-        String[] parts = line.split(",");
-        String product = parts[0];
-        BigDecimal price = new BigDecimal(parts[1]);
+  try (
+    BufferedReader bufferedReader = new BufferedReader(reader);
+    PrintWriter printWriter = new PrintWriter(writer);
+  ) {
+    String line = bufferedReader.readLine();
+    String[] parts = line.split(",");
+    String product = parts[0];
+    BigDecimal price = new BigDecimal(parts[1]);
 
-        printWriter.println("*************** RECEIPT ****************");
-        printWriter.println();
-        printWriter.println(String.format("%-32s%8.2f", product, price));
-        printWriter.println(String.format("%-32s%8s", "", "--------"));
-        printWriter.println(String.format("%-32s%8.2f", "Total", price));
-        printWriter.println(String.format("%-32s%8s", "", "========"));
-    }
+    printWriter.println("*************** RECEIPT ****************");
+    printWriter.println();
+    printWriter.println(String.format("%-32s%8.2f", product, price));
+    printWriter.println(String.format("%-32s%8s", "", "--------"));
+    printWriter.println(String.format("%-32s%8.2f", "Total", price));
+    printWriter.println(String.format("%-32s%8s", "", "========"));
+  }
 }
         </code></pre>
       </section>
@@ -176,16 +176,16 @@ public static void run(Reader reader, Writer writer) {
         <h2>Separated responsibilities</h2>
         <pre><code data-trim class="java">
 public class Basket {
-    public void addItem(Item item) {...}
-    public Item getItem(int i) {...}
-    public int getCount() {...}
-    public BigDecimal getTotal() {...}
+  public void addItem(Item item) {...}
+  public Item getItem(int i) {...}
+  public int getCount() {...}
+  public BigDecimal getTotal() {...}
 }
 
 public static void run(Reader input, Writer output) {
-    Basket basket = new Basket();
-    new BasketReader().read(basket, input);
-    new BasketWriter().write(basket, output);
+  Basket basket = new Basket();
+  new BasketReader().read(basket, input);
+  new BasketWriter().write(basket, output);
 }
         </code></pre>
       </section>
@@ -196,12 +196,12 @@ public static void run(Reader input, Writer output) {
         <pre style="font-size: 0.5em;"><code data-trim class="java">
 @Test
 public void testSingleItem() {
-    Basket basket = new Basket();
-    basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
-    assertThat(basket.getCount(), is(equalTo(1)));
-    assertThat(basket.getItem(0).getProduct(), is(equalTo("Pizza - Pepperoni")));
-    assertThat(basket.getItem(0).getPrice(), is(equalTo(new BigDecimal("12.99"))));
-    assertThat(basket.getTotal(), is(equalTo(new BigDecimal("12.99"))));
+  Basket basket = new Basket();
+  basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
+  assertThat(basket.getCount(), is(equalTo(1)));
+  assertThat(basket.getItem(0).getProduct(), is(equalTo("Pizza - Pepperoni")));
+  assertThat(basket.getItem(0).getPrice(), is(equalTo(new BigDecimal("12.99"))));
+  assertThat(basket.getTotal(), is(equalTo(new BigDecimal("12.99"))));
 }
         </code></pre>
       </section>
@@ -210,19 +210,19 @@ public void testSingleItem() {
         <h2>Basket code</h2>
         <pre><code data-trim class="java">
 public class Basket {
-    private final ArrayList&lt;Item&gt; items;
+  private final ArrayList&lt;Item&gt; items;
 
-    public Basket() { this.items = new ArrayList&lt;Item&gt;(); }
-    public void addItem(Item item) { items.add(item); }
-    public Item getItem(int i) { return items.get(i); }
-    public int getCount() { return items.size(); }
+  public Basket() { this.items = new ArrayList&lt;Item&gt;(); }
+  public void addItem(Item item) { items.add(item); }
+  public Item getItem(int i) { return items.get(i); }
+  public int getCount() { return items.size(); }
 
-    public BigDecimal getTotal() {
-        return items.stream()
-            .map(i -&gt; i.getPrice())
-            .reduce((a, b) -&gt; a.add(b))
-            .orElse(new BigDecimal("0.00"));
-    }
+  public BigDecimal getTotal() {
+    return items.stream()
+      .map(i -&gt; i.getPrice())
+      .reduce((a, b) -&gt; a.add(b))
+      .orElse(new BigDecimal("0.00"));
+  }
 }
         </code></pre>
       </section>
@@ -233,14 +233,14 @@ public class Basket {
         <pre style="font-size: 0.5em;"><code data-trim class="java">
 @Test
 public void testSingleItem() {
-    Basket basket = mock(Basket.class);
-    StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
-    new BasketReader().read(basket, input);
+  Basket basket = mock(Basket.class);
+  StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
+  new BasketReader().read(basket, input);
 
-    ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
-    verify(basket, times(1)).addItem(item.capture());
-    assertThat(item.getValue().getProduct(), is(equalTo("Pizza - Pepperoni")));
-    assertThat(item.getValue().getPrice(), is(equalTo(new BigDecimal("12.99"))));
+  ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
+  verify(basket, times(1)).addItem(item.capture());
+  assertThat(item.getValue().getProduct(), is(equalTo("Pizza - Pepperoni")));
+  assertThat(item.getValue().getPrice(), is(equalTo(new BigDecimal("12.99"))));
 }
         </code></pre>
       </section>
@@ -249,14 +249,12 @@ public void testSingleItem() {
         <h2>Basket reader code</h2>
         <pre><code data-trim class="java">
 public void read(Basket basket, Reader input) {
-    try (
-        BufferedReader bufferedReader = new BufferedReader(input);
-    ) {
-        bufferedReader.lines()
-            .map(line -&gt; line.split(","))
-            .map(parts -&gt; new Item(parts[0], new BigDecimal(parts[1])))
-            .forEach(item -&gt; basket.addItem(item));
-    }
+  try (BufferedReader bufferedReader = new BufferedReader(input)) {
+    bufferedReader.lines()
+      .map(line -&gt; line.split(","))
+      .map(parts -&gt; new Item(parts[0], new BigDecimal(parts[1])))
+      .forEach(item -&gt; basket.addItem(item));
+  }
 }
         </code></pre>
       </section>
@@ -267,19 +265,19 @@ public void read(Basket basket, Reader input) {
         <pre><code data-trim class="java">
 @Test
 public void testSingleItem() {
-    Basket basket = new Basket();
-    basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
-    StringWriter output = new StringWriter();
-    new BasketWriter().write(basket, output);
+  Basket basket = new Basket();
+  basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
+  StringWriter output = new StringWriter();
+  new BasketWriter().write(basket, output);
 
-    String expectedOutput =
-        "*************** RECEIPT ****************\n" +
-        "\n" +
-        "Pizza - Pepperoni                  12.99\n" +
-        "                                --------\n" +
-        "Total                              12.99\n" +
-        "                                ========\n";
-    assertThat(output.toString(), is(equalTo(expectedOutput)));
+  String expectedOutput =
+    "*************** RECEIPT ****************\n" +
+    "\n" +
+    "Pizza - Pepperoni                  12.99\n" +
+    "                                --------\n" +
+    "Total                              12.99\n" +
+    "                                ========\n";
+  assertThat(output.toString(), is(equalTo(expectedOutput)));
 }
         </code></pre>
       </section>
@@ -326,20 +324,20 @@ public void write(AccessibleBasket basket, Writer output) {
         <h2>Task 3: Segregate interfaces</h2>
         <pre style="font-size: 0.52em;"><code data-trim class="java">
 public interface MutatableBasket {
-    void addItem(Item item);
+  void addItem(Item item);
 }
 public interface AccessibleBasket {
-    Item getItem(int i);
-    int getCount();
-    BigDecimal getTotal();
+  Item getItem(int i);
+  int getCount();
+  BigDecimal getTotal();
 }
 public class Basket implements MutatableBasket, AccessibleBasket {...}
 
 public class BasketReader {
-    public void read(MutatableBasket basket, Reader input) {...}
+  public void read(MutatableBasket basket, Reader input) {...}
 }
 public class BasketWriter {
-    public void write(AccessibleBasket basket, Writer output) {...}
+  public void write(AccessibleBasket basket, Writer output) {...}
 }
         </code></pre>
       </section>
@@ -434,13 +432,13 @@ public class SaleBasket extends Basket {
         <p><code>Basket</code> vs <code>SaleBasket</code></p>
         <pre><code data-trim class="java">
 public String getMessage() {
-    return null;
+  return null;
 }
         </code></pre>
         <pre><code data-trim class="java">
 @Override
 public String getMessage() {
-    return "Includes discount of 10%";
+  return "Includes discount of 10%";
 }
         </code></pre>
         <p><code>BasketWriter.java</code></p>
