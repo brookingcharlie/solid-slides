@@ -91,7 +91,7 @@ Total                              55.48
         <h2>Simple app test</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 public class App {
-  public static void run(Reader reader, Writer writer) throws IOException {
+  public static void run(Reader reader, Writer writer) {
     throw new UnsupportedOperationException();
   }
 }
@@ -122,7 +122,7 @@ public void testSingle() throws Exception {
       <section>
         <h2>Simple app code</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
-public static void run(Reader reader, Writer writer) throws IOException {
+public static void run(Reader reader, Writer writer) {
     try (
         BufferedReader bufferedReader = new BufferedReader(reader);
         PrintWriter printWriter = new PrintWriter(writer);
@@ -182,7 +182,7 @@ public class Basket {
     public BigDecimal getTotal() {...}
 }
 
-public static void run(Reader input, Writer output) throws IOException {
+public static void run(Reader input, Writer output) {
     Basket basket = new Basket();
     new BasketReader().read(basket, input);
     new BasketWriter().write(basket, output);
@@ -232,7 +232,7 @@ public class Basket {
         <p>Verify that reader adds items to the basket.</p>
         <pre style="font-size: 0.5em;"><code data-trim class="java">
 @Test
-public void testSingleItem() throws IOException {
+public void testSingleItem() {
     Basket basket = mock(Basket.class);
     StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
     new BasketReader().read(basket, input);
@@ -248,7 +248,7 @@ public void testSingleItem() throws IOException {
       <section>
         <h2>Basket reader code</h2>
         <pre><code data-trim class="java">
-public void read(Basket basket, Reader input) throws IOException {
+public void read(Basket basket, Reader input) {
     try (
         BufferedReader bufferedReader = new BufferedReader(input);
     ) {
@@ -266,7 +266,7 @@ public void read(Basket basket, Reader input) throws IOException {
         <p>Compare actual vs. expected output.</p>
         <pre><code data-trim class="java">
 @Test
-public void testSingleItem() throws IOException {
+public void testSingleItem() {
     Basket basket = new Basket();
     basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
     StringWriter output = new StringWriter();
@@ -287,7 +287,7 @@ public void testSingleItem() throws IOException {
       <section>
         <h2>Basket writer code</h2>
         <pre style="font-size: 0.54em;"><code data-trim class="java">
-public void write(AccessibleBasket basket, Writer output) throws IOException {
+public void write(AccessibleBasket basket, Writer output) {
   try (PrintWriter printer = new PrintWriter(output)) {
     printer.println("*************** RECEIPT ****************");
     printer.println();
@@ -610,7 +610,7 @@ for (Item item : basket.getItems()) {
         </ul>
         <pre><code data-trim class="java">
 public class App {
-  public void run(Reader input, Writer output) throws IOException {
+  public void run(Reader input, Writer output) {
     BasketReader inputReader = new BasketReader();
     BasketWriter outputWriter = new BasketWriter();
     Basket basket = new Basket();
@@ -634,7 +634,7 @@ public class App {
     this.outputWriter = outputWriter;
   }
 
-  public void run(Reader input, Writer output) throws IOException {
+  public void run(Reader input, Writer output) {
     Basket basket = basketFactory.createBasket();
     inputReader.read(basket, input);
     outputWriter.write(basket, output);
