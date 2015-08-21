@@ -81,7 +81,7 @@ Pizza - Supreme                    12.99
 Garlic bread                        8.50
 Chianti                            21.00
                                 --------
-Total for 4 items                  55.48
+Total                              55.48
                                 ========
           </code></pre>
         </div>
@@ -89,6 +89,13 @@ Total for 4 items                  55.48
 
       <section>
         <h2>Simple app test</h2>
+        <pre style="font-size: 0.45em;"><code data-trim class="java">
+public class App {
+  public static void run(Reader reader, Writer writer) throws IOException {
+    throw new UnsupportedOperationException();
+  }
+}
+        </code></pre>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 @Test
 public void testSingle() throws Exception {
@@ -99,7 +106,7 @@ public void testSingle() throws Exception {
         "\n" +
         "Pizza - Pepperoni                  12.99\n" +
         "                                --------\n" +
-        "Total for 1 items                  12.99\n" +
+        "Total                              12.99\n" +
         "                                ========\n";
     try (
         StringReader reader = new StringReader(input);
@@ -129,7 +136,7 @@ public static void run(Reader reader, Writer writer) throws IOException {
         printWriter.println();
         printWriter.println(String.format("%-32s%8.2f", product, price));
         printWriter.println(String.format("%-32s%8s", "", "--------"));
-        printWriter.println(String.format("%-32s%8.2f", "Total for 1 items", price));
+        printWriter.println(String.format("%-32s%8.2f", "Total", price));
         printWriter.println(String.format("%-32s%8s", "", "========"));
     }
 }
@@ -164,6 +171,9 @@ public static void run(Reader reader, Writer writer) throws IOException {
           <li>Make basket responsible for calculating total</li>
           <li>Read/write text formats in separate class</li>
         </ol>
+      </section>
+      <section>
+        <h2>Separated responsibilities</h2>
         <pre><code data-trim class="java">
 public class Basket {
     public void addItem(Item item) {...}
@@ -183,18 +193,15 @@ public static void run(Reader input, Writer output) throws IOException {
       <section>
         <h2>Basket test</h2>
         <p>Test adding/getting items, count, and total.</p>
-        <pre><code data-trim class="java">
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
 @Test
 public void testSingleItem() {
     Basket basket = new Basket();
     basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
     assertThat(basket.getCount(), is(equalTo(1)));
-    assertThat(basket.getItem(0).getProduct(),
-        is(equalTo("Pizza - Pepperoni")));
-    assertThat(basket.getItem(0).getPrice(),
-        is(equalTo(new BigDecimal("12.99"))));
-    assertThat(basket.getTotal(),
-        is(equalTo(new BigDecimal("12.99"))));
+    assertThat(basket.getItem(0).getProduct(), is(equalTo("Pizza - Pepperoni")));
+    assertThat(basket.getItem(0).getPrice(), is(equalTo(new BigDecimal("12.99"))));
+    assertThat(basket.getTotal(), is(equalTo(new BigDecimal("12.99"))));
 }
         </code></pre>
       </section>
@@ -223,7 +230,7 @@ public class Basket {
       <section>
         <h2>Basket reader test</h2>
         <p>Verify that reader adds items to the basket.</p>
-        <pre><code data-trim class="java">
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
 @Test
 public void testSingleItem() throws IOException {
     Basket basket = mock(Basket.class);
@@ -232,10 +239,8 @@ public void testSingleItem() throws IOException {
 
     ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
     verify(basket, times(1)).addItem(item.capture());
-    assertThat(item.getValue().getProduct(),
-        is(equalTo("Pizza - Pepperoni")));
-    assertThat(item.getValue().getPrice(),
-        is(equalTo(new BigDecimal("12.99"))));
+    assertThat(item.getValue().getProduct(), is(equalTo("Pizza - Pepperoni")));
+    assertThat(item.getValue().getPrice(), is(equalTo(new BigDecimal("12.99"))));
 }
         </code></pre>
       </section>
@@ -272,7 +277,7 @@ public void testSingleItem() throws IOException {
         "\n" +
         "Pizza - Pepperoni                  12.99\n" +
         "                                --------\n" +
-        "Total for 1 items                  12.99\n" +
+        "Total                              12.99\n" +
         "                                ========\n";
     assertThat(output.toString(), is(equalTo(expectedOutput)));
 }
