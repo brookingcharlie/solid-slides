@@ -3,10 +3,10 @@
 <head>
   <meta charset="utf-8">
 
-  <title>Test-Driven Development and Principles of Software Design</title>
+  <title>Principles of Software Design and Test-Driven Development</title>
 
-  <meta name="description" content="Hands-on test-driven development exercise illustrating principles for good software design">
-  <meta name="author" content="Steve Morris and Charlie Brooking">
+  <meta name="description" content="Overview of principles for good software design including hands-on exercise referencing test-driven development">
+  <meta name="author" content="Charlie Brooking and Steve Morris">
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no, minimal-ui">
@@ -31,8 +31,8 @@
   <div class="reveal">
     <div class="slides">
       <section class="title">
-        <h1>Test-Driven Development</h1>
-        <h3>and Principles of Software Design</h3>
+        <h1>Principles of Software Design</h1>
+        <h3>and the role of Test-Driven Development</h3>
       </section>
 
       <section>
@@ -51,7 +51,6 @@
         <h2>Motivation for design</h2>
         <p>Competitive advantage &ndash; avoids business risk</p>
         <ul>
-          <li>Manage complexity of a system</li>
           <li>Increase speed of changes</li>
           <li>Reduce cost and risk of changes</li>
           <li>Enable software reuse</li>
@@ -61,44 +60,71 @@
       <section>
         <h2>Symptoms of bad design</h2>
         <ul>
-          <li><b>Rigid</b>: difficult to change, even in simple ways.</li>
-          <li><b>Fragile</b>: breaks in many places when changed.</li>
-          <li><b>Immobile</b>: inability to reuse between projects.</li>
-          <li><b>Viscous</b>: difficult to add design-preserving code.</li>
-          <!-- Viscous in the sense of resisting change - like viscous liquid. -->
+          <li><b>Rigid</b>: difficult to change, even in simple ways</li>
+          <li><b>Fragile</b>: breaks in many places when changed</li>
+          <li><b>Immobile</b>: inability to reuse between projects</li>
+          <!-- <li><b>Viscous</b>: difficult to add design-preserving code</li> -->
+          <!-- Viscous in the sense of resisting change - like viscous liquid -->
         </ul>
       </section>
 
       <section>
-        <h2>Our most basic principles</h2>
-        <h4>High cohesion</h4>
-        <p>Low cohesion means module does too much, hard to maintain</p>
-        <h4>Low coupling</h4>
-        <p>High coupling means high rigidity and fragility</p>
-      </section>
-
       <section>
-        <h2>General design principles</h2>
+        <h2>Developer guidelines</h2>
         <ul>
           <li>Keep it simple, stupid (KISS)</li>
           <li>You ain't gonna need it (YAGNI)</li>
-          <!--
-            "Always implement things when you actually need them, never when you just
-            forsee that you need them." - Ron Jeffries
-          -->
           <li>Don't repeat yourself (DRY)</li>
-          <!--
-            Every piece of knowledge must have a single, unambiguous, authoritative
-            representation within a system.
-
-            "Refactoring has as a primary objective getting each piece of functionality
-            to exist in exactly on place in the software." - Ron Jeffries
-          -->
         </ul>
       </section>
+      <section>
+        <h2>Keep it simple, stupid (KISS)</h2>
+        <blockquote>"Make everything as simple as possible, but not simpler." - Einstein</blockquote>
+        <div style="display: inline-block; width: 38.5%;">
+          <img style="width: 100%;" src="img/flymo.jpg">
+        </div>
+        <div style="display: inline-block; width: 50%;">
+          <img style="width: 100%;" src="img/megamower.jpg">
+        </div>
+      </section>
+      <section>
+        <h2 style="font-size: 1.45em;">You ain't gonna need it (YAGNI)</h2>
+        <blockquote>"Always implement things when you actually need them, never when you just foresee that you need them." - Ron Jeffries (XP co-founder)</blockquote>
+        <ul>
+          <li>Wastes time and resources</li>
+          <li>Complicates system (violates KISS)</li>
+          <li>Difficult to define and test feature until needed</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Don't repeat yourself (DRY)</h2>
+        <blockquote>"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system." - The Pragmatic Programmer</blockquote>
+        <ul>
+          <li>Change software in single place</li>
+          <li>Methods/functions, code generation</li>
+        </ul>
+      </section>
+      </section>
+
+      <!--
+      <section>
+        <h2>Cohesion and Coupling</h2>
+        <div style="display: inline-block; width: 50%; vertical-align: top;">
+          <br>
+          <h4>Cohesion</h4>
+          <p>Degree to which elements of a module belong together</p>
+          <br>
+          <h4>Coupling</h4>
+          <p>Degree of interdependence between software modules</p>
+        </div>
+        <div style="display: inline-block; width: 40%;">
+          <img src="img/coupling.png">
+        </div>
+      </section>
+      -->
 
       <section>
-        <h2>The exercise</h2>
+        <h2>Exercise</h2>
         <div style="display: inline-block; width: 65%;">
           <h4>Shopping checkout</h4>
           <p>Take customer's shopping basket and generate an itemised receipt.</p>
@@ -141,7 +167,7 @@ Total                              55.48
         <h2>Simple app test</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 public class App {
-  public static void run(Reader reader, Writer writer) {
+  public void run(Reader reader, Writer writer) {
     throw new UnsupportedOperationException();
   }
 }
@@ -149,8 +175,7 @@ public class App {
         <pre style="font-size: 0.45em;"><code data-trim class="java">
 @Test
 public void testSingle() throws Exception {
-  String input =
-    "Pizza - Pepperoni,12.99";
+  String input = "Pizza - Pepperoni,12.99";
   String expectedOutput =
     "*************** RECEIPT ****************\n" +
     "\n" +
@@ -172,22 +197,21 @@ public void testSingle() throws Exception {
       <section>
         <h2>Simple app code</h2>
         <pre style="font-size: 0.45em;"><code data-trim class="java">
-public static void run(Reader reader, Writer writer) {
-  try (
-    BufferedReader bufferedReader = new BufferedReader(reader);
-    PrintWriter printWriter = new PrintWriter(writer);
-  ) {
-    String line = bufferedReader.readLine();
+public class App {
+  public void run(Reader reader, Writer writer) {
+    String line = reader.readLine();
     String[] parts = line.split(",");
     String product = parts[0];
     BigDecimal price = new BigDecimal(parts[1]);
 
-    printWriter.println("*************** RECEIPT ****************");
-    printWriter.println();
-    printWriter.println(String.format("%-32s%8.2f", product, price));
-    printWriter.println(String.format("%-32s%8s", "", "--------"));
-    printWriter.println(String.format("%-32s%8.2f", "Total", price));
-    printWriter.println(String.format("%-32s%8s", "", "========"));
+    BigDecimal total = price;
+  
+    writer.println("*************** RECEIPT ****************");
+    writer.println();
+    writer.println(String.format("%-32s%8.2f", product, price));
+    writer.println(String.format("%-32s%8s", "", "--------"));
+    writer.println(String.format("%-32s%8.2f", "Total", total));
+    writer.println(String.format("%-32s%8s", "", "========"));
   }
 }
         </code></pre>
@@ -199,9 +223,9 @@ public static void run(Reader reader, Writer writer) {
         <blockquote>A class should have one, and only one, reason to change.</blockquote>
         <p>Responsibilities of our <code>App</code> class?</p>
         <ol>
-          <li>Reads formatted input text</li>
-          <li>Calculates total price (well, it will)</li>
-          <li>Writes formatted output text</li>
+          <li>Reads items from a file</li>
+          <li>Calculates total price</li>
+          <li>Writes formatted receipt</li>
         </ol>
         <!--
           readability
@@ -232,10 +256,12 @@ public class Basket {
   public BigDecimal getTotal() {...}
 }
 
-public static void run(Reader input, Writer output) {
-  Basket basket = new Basket();
-  new BasketReader().read(basket, input);
-  new BasketWriter().write(basket, output);
+public class App {
+  public void run(Reader input, Writer output) {
+    Basket basket = new Basket();
+    new ItemsReader().read(basket, input);
+    new ReceiptWriter().write(basket, output);
+  }
 }
         </code></pre>
       </section>
@@ -257,10 +283,51 @@ public void testSingleItem() {
       </section>
 
       <section>
+        <h2>Basket reader test</h2>
+        <p>Verify that reader adds items to the basket.</p>
+        <pre style="font-size: 0.5em;"><code data-trim class="java">
+@Test
+public void testSingleItem() {
+  Basket basket = mock(Basket.class);
+  StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
+  new ItemsReader().read(basket, input);
+
+  ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
+  verify(basket, times(1)).addItem(item.capture());
+  assertThat(item.getValue().getProduct(), is(equalTo("Pizza - Pepperoni")));
+  assertThat(item.getValue().getPrice(), is(equalTo(new BigDecimal("12.99"))));
+}
+        </code></pre>
+      </section>
+
+      <section>
+        <h2>Basket writer test</h2>
+        <p>Compare actual vs. expected output.</p>
+        <pre><code data-trim class="java">
+@Test
+public void testSingleItem() {
+  Basket basket = new Basket();
+  basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
+  StringWriter output = new StringWriter();
+  new ReceiptWriter().write(basket, output);
+
+  String expectedOutput =
+    "*************** RECEIPT ****************\n" +
+    "\n" +
+    "Pizza - Pepperoni                  12.99\n" +
+    "                                --------\n" +
+    "Total                              12.99\n" +
+    "                                ========\n";
+  assertThat(output.toString(), is(equalTo(expectedOutput)));
+}
+        </code></pre>
+      </section>
+
+      <section>
         <h2>Basket code</h2>
         <pre><code data-trim class="java">
 public class Basket {
-  private final ArrayList&lt;Item&gt; items;
+  private ArrayList&lt;Item&gt; items;
 
   public Basket() { this.items = new ArrayList&lt;Item&gt;(); }
   public void addItem(Item item) { items.add(item); }
@@ -278,56 +345,13 @@ public class Basket {
       </section>
 
       <section>
-        <h2>Basket reader test</h2>
-        <p>Verify that reader adds items to the basket.</p>
-        <pre style="font-size: 0.5em;"><code data-trim class="java">
-@Test
-public void testSingleItem() {
-  Basket basket = mock(Basket.class);
-  StringReader input = new StringReader("Pizza - Pepperoni,12.99\n");
-  new BasketReader().read(basket, input);
-
-  ArgumentCaptor&lt;Item&gt; item = ArgumentCaptor.forClass(Item.class);
-  verify(basket, times(1)).addItem(item.capture());
-  assertThat(item.getValue().getProduct(), is(equalTo("Pizza - Pepperoni")));
-  assertThat(item.getValue().getPrice(), is(equalTo(new BigDecimal("12.99"))));
-}
-        </code></pre>
-      </section>
-
-      <section>
         <h2>Basket reader code</h2>
         <pre><code data-trim class="java">
 public void read(Basket basket, Reader input) {
-  try (BufferedReader bufferedReader = new BufferedReader(input)) {
-    bufferedReader.lines()
-      .map(line -&gt; line.split(","))
-      .map(parts -&gt; new Item(parts[0], new BigDecimal(parts[1])))
-      .forEach(item -&gt; basket.addItem(item));
-  }
-}
-        </code></pre>
-      </section>
-
-      <section>
-        <h2>Basket writer test</h2>
-        <p>Compare actual vs. expected output.</p>
-        <pre><code data-trim class="java">
-@Test
-public void testSingleItem() {
-  Basket basket = new Basket();
-  basket.addItem(new Item("Pizza - Pepperoni", new BigDecimal("12.99")));
-  StringWriter output = new StringWriter();
-  new BasketWriter().write(basket, output);
-
-  String expectedOutput =
-    "*************** RECEIPT ****************\n" +
-    "\n" +
-    "Pizza - Pepperoni                  12.99\n" +
-    "                                --------\n" +
-    "Total                              12.99\n" +
-    "                                ========\n";
-  assertThat(output.toString(), is(equalTo(expectedOutput)));
+  reader.lines()
+    .map(line -&gt; line.split(","))
+    .map(parts -&gt; new Item(parts[0], new BigDecimal(parts[1])))
+    .forEach(item -&gt; basket.addItem(item));
 }
         </code></pre>
       </section>
@@ -336,18 +360,15 @@ public void testSingleItem() {
         <h2>Basket writer code</h2>
         <pre style="font-size: 0.54em;"><code data-trim class="java">
 public void write(AccessibleBasket basket, Writer output) {
-  try (PrintWriter printer = new PrintWriter(output)) {
-    printer.println("*************** RECEIPT ****************");
-    printer.println();
-    for (int i = 0; i &lt; basket.getCount(); i++) {
-      printer.println(String.format("%-32s%8.2f",
-        basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
-    }
-    printer.println(String.format("%-32s%8s", "", "--------"));
-    String total = String.format("Total for %d items", basket.getCount());
-    printer.println(String.format("%-32s%8.2f", total, basket.getTotal()));
-    printer.println(String.format("%-32s%8s", "", "========"));
+  writer.println("*************** RECEIPT ****************");
+  writer.println();
+  for (int i = 0; i &lt; basket.getCount(); i++) {
+    writer.println(String.format("%-32s%8.2f",
+      basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
   }
+  writer.println(String.format("%-32s%8s", "", "--------"));
+  writer.println(String.format("%-32s%8.2f", "Total", basket.getTotal()));
+  writer.println(String.format("%-32s%8s", "", "========"));
 }
         </code></pre>
       </section>
@@ -356,37 +377,45 @@ public void write(AccessibleBasket basket, Writer output) {
       <section>
         <h2 style="font-size: 1.40em;">Interface Segregation Principle</h2>
         <blockquote>Make fine grained interfaces that are client specific.</blockquote>
-        <p>Consider the clients of our <code>Basket</code> class:</p>
+        <p>Problems with "fat interfaces":</p>
         <ul>
-          <li><code>BasketReader</code> only needs <code>addItem</code></li>
-          <li><code>BasketWriter</code> needs getters (item, count, total)</code></li>
-          <li>...but it shouldn't be able to call <code>addItem</code></li>
+          <li>Burdens implementers of the interface</li>
+          <li>Confusing for users - which method do I call?</li>
+          <li>Users could call methods they shouldn't</li>
         </ul>
-        <!--
-          - Fat interface imposes implementation burden on author of class ahering to interface.
-          - Fat interface is confusing for use of the class - which method do I call?
-          - Fat interface could lead to user of class calling methods that it shouldn't.
-        -->
       </section>
 
       <section>
       <section>
         <h2>Task 3: Segregate interfaces</h2>
+        <p>Consider the clients of our <code>Basket</code> class:</p>
+        <ul>
+          <li><code>ItemsReader</code> only needs <code>addItem</code></li>
+          <li><code>ReceiptWriter</code> needs items, count, total</code></li>
+          <li>...but it shouldn't be able to add items!</li>
+        </ul>
+      </section>
+      <section>
+        <h2>Segregated interfaces</h2>
         <pre style="font-size: 0.52em;"><code data-trim class="java">
-public interface MutatableBasket {
+public interface ModifiableBasket {
   void addItem(Item item);
 }
+        </code></pre>
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
 public interface AccessibleBasket {
   Item getItem(int i);
   int getCount();
   BigDecimal getTotal();
 }
-public class Basket implements MutatableBasket, AccessibleBasket {...}
+        </code></pre>
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
+public class Basket implements ModifiableBasket, AccessibleBasket {...}
 
-public class BasketReader {
-  public void read(MutatableBasket basket, Reader input) {...}
+public class ItemsReader {
+  public void read(ModifiableBasket basket, Reader input) {...}
 }
-public class BasketWriter {
+public class ReceiptWriter {
   public void write(AccessibleBasket basket, Writer output) {...}
 }
         </code></pre>
@@ -401,8 +430,7 @@ public class BasketWriter {
         </blockquote>
         <div style="display: inline-block; width: 45%;">
           <pre style="font-size: 0.52em;"><code data-trim class="java">
-abstract class Shape {
-}
+abstract class Shape {}
 class Rectangle extends Shape {
   void drawRectangle() {...}
 }
@@ -430,8 +458,7 @@ class Rectangle extends Shape {
 class Square extends Shape {
   void draw() {...}
 }
-
-
+// No knowledge about subclasses
 class App {
   void render(Shape shape) {
     shape.draw();
@@ -451,53 +478,63 @@ class App {
         <h2>Task 4: Sale basket</h2>
         <blockquote>Everything must go!</blockquote>
         <ul>
-          <li>Give all customers 10% discount</li>
+          <li>Give all customers a 10% discount</li>
           <li>Print discount message on receipt</li>
         </ul>
+        <p>Fix the Liskov violation in the code on the next slide.</p>
       </section>
 
       <section>
         <h2>A sale basket</h2>
-        <pre><code data-trim class="java">
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
 public class SaleBasket extends Basket {
-  @Override
   public BigDecimal getTotal() {
-    return super.getTotal().multiply(new BigDecimal("0.9")).setScale(2);
+    return super.getTotal().multiply(new BigDecimal("0.9"));
   }
 }
         </code></pre>
-        <p><code>BasketWriter</code></p>
-        <pre><code class="diff">     String totalDescription = String.format("Total for %d items", basket.getCount());
-     printWriter.println(String.format("%-32s%8.2f", totalDescription, basket.getTotal()));
-     printWriter.println(String.format("%-32s%8s", "", "====...."));
-+    if (basket instanceof SaleBasket) {
-+      printWriter.println("Includes discount of 10%");
-+    }
-   }
- }</code></pre>
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
+public class ReceiptWriter {
+  public void write(AccessibleBasket basket, Writer writer) {
+    // ...
+    writer.println(String.format("%-32s%8.2f", "Total", basket.getTotal()));
+    writer.println(String.format("%-32s%8s", "", "========"));
+    if (basket instanceof SaleBasket) {
+      writer.println("Includes discount of 10%");
+    }
+  }
+}
+        </code></pre>
       </section>
 
       <section>
         <h2>Another sale basket</h2>
-        <p><code>Basket</code> vs <code>SaleBasket</code></p>
-        <pre><code data-trim class="java">
-public String getMessage() {
-  return null;
+        <p>Add <code>getMessage()</code> on the base class</p>
+        <div style="display: inline-block; width: 40%;">
+          <pre style="font-size: 0.52em;"><code data-trim class="java">
+public class Basket {
+  public String getMessage() {
+    return null;
+  }
 }
         </code></pre>
-        <pre><code data-trim class="java">
-@Override
-public String getMessage() {
-  return "Includes discount of 10%";
+        </div>
+        <div style="display: inline-block; width: 50%;">
+          <pre style="font-size: 0.52em;"><code data-trim class="java">
+public class SaleBasket {
+  public String getMessage() {
+    return "Includes discount of 10%";
+  }
 }
         </code></pre>
-        <p><code>BasketWriter.java</code></p>
+        </div>
+        <p><code>ReceiptWriter</code> no longer references derived class</p>
         <pre><code data-trim class="diff">
 -if (basket instanceof SaleBasket) {
--  printWriter.println("Includes discount of 10%");
+-  writer.println("Includes discount of 10%");
 -}
 +if (basket.getMessage() != null) {
-+  printWriter.println(basket.getMessage());
++  writer.println(basket.getMessage());
 +}
         </code></pre>
       </section>
@@ -551,43 +588,48 @@ public String getMessage() {
       <section>
       <section>
         <h2>Task 5: Extensible basket</h2>
-        <blockquote>The basket to end all baskets</blockquote>
         <ul>
-          <li>What else could we want in a basket?</li>
-          <li>Maybe the discount should be a line item.</li>
-          <li>What if future baskets need extra line items?</li>
+          <li>What else do we need in a basket?</li>
+          <li>The discount should be a line item</li>
+          <li>We need other line items (e.g. for taxes)</li>
         </ul>
       </section>
       <section>
         <h2>Our extensible basket</h2>
-        <p><code>Basket</code> vs <code>SaleBasket</code></p>
-        <pre><code data-trim class="java">
-@Override
-public List&lt;Item&gt; getExtraItems() {
-  return Collections.emptyList();
+        <div style="display: inline-block; width: 48%;">
+          <pre style="font-size: 0.50em;"><code data-trim class="java">
+// Add extention point
+public class Basket {
+  public List&lt;Item&gt; getExtraItems() {
+    return Collections.emptyList();
+  }
 }
         </code></pre>
-        <pre><code data-trim class="java">
-@Override
-public List&lt;Item&gt; getExtraItems() {
-  BigDecimal discount = super.getTotal().multiply(new BigDecimal("-0.1")).setScale(2);
-  return asList(new Item("Discount", discount));
+        </div>
+        <div style="display: inline-block; width: 48%;">
+          <pre style="font-size: 0.50em;"><code data-trim class="java">
+public class SaleBasket {
+  public List&lt;Item&gt; getExtraItems() {
+    return asList(new Item(
+      "Discount", getDiscount()));
+  }
 }
         </code></pre>
-        <p><code>BasketWriter.java</code></p>
-        <pre><code class="diff"> for (int i = 0; i &lt; basket.getCount(); i++) {
-   printWriter.println(String.format("%-32s%8.2f", basket.getItem(i).getProduct(), basket.getItem(i).getPrice()));
+        </div>
+        <p><code>ReceiptWriter.java</code></p>
+        <pre style="font-size: 0.50em;"><code class="diff"> for (int i = 0; i &lt; basket.getCount(); i++) {
+   Item item = basket.getItem(i);
+   writer.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
  }
 +for (Item item : basket.getExtraItems()) {
-+  printWriter.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
++  writer.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
 +}</code></pre>
       </section>
       <section>
         <h2>Our extensible basket</h2>
-        <p><code>Basket</code> vs <code>SaleBasket</code></p>
         <pre><code data-trim class="java">
-public class Basket implements MutatableBasket, AccessibleBasket {
-  public final List&lt;Item&gt; getItems() {
+public class Basket implements ModifiableBasket, AccessibleBasket {
+  public List&lt;Item&gt; getItems() {
     List&lt;Item&gt; result = new ArrayList&lt;Item&gt;(items);
     result.addAll(getExtraItems());
     return result;
@@ -601,27 +643,25 @@ public class Basket implements MutatableBasket, AccessibleBasket {
 public class SaleBasket extends Basket {
   @Override
   protected List&lt;Item&gt; getExtraItems() {
-    BigDecimal discount = super.getTotal().multiply(new BigDecimal("-0.1")).setScale(2);
-    return asList(new Item("Discount", discount));
+    return asList(new Item("Discount", getDiscount()));
   }
 }
         </code></pre>
       </section>
       <section>
         <h2>Our extensible basket</h2>
-        <p><code>Basket</code></p>
         <pre><code data-trim class="java">
-public interface Basket implements MutatableBasket, AccessibleBasket {
+public interface Basket implements ModifiableBasket, AccessibleBasket {
   public void addItem(Item item) {...}
   public List&lt;Item&gt; getItems() {...}
   public BigDecimal getTotal() {...}
   public String getMessage() {...}
 }
         </code></pre>
-        <p><code>BasketWriter.java</code></p>
-        <pre><code data-trim class="java">
+        <p><code>ReceiptWriter.java</code></p>
+        <pre style="font-size: 0.50em;"><code data-trim class="java">
 for (Item item : basket.getItems()) {
-  printWriter.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
+  writer.println(String.format("%-32s%8.2f", item.getProduct(), item.getPrice()));
 }</code></pre>
       </section>
       </section>
@@ -629,11 +669,9 @@ for (Item item : basket.getItems()) {
       <section>
         <h2 style="font-size: 1.45em;">Dependency Inversion Principle</h2>
         <blockquote>High-level modules should not depend upon low-level modules.</blockquote>
-        <p>Both should depend upon abstractions!</p>
         <ul>
-          <li>Code naturally depends on its dependencies, right?</li>
-          <li>But is this wrong? Does our design become brittle?</li>
-          <li>Rigorously apply Open-Closed and Liskov.</li>
+        <li>Both should depend upon abstractions.</li>
+        <li>From rigorously applying Open-Closed and Liskov.</li>
         </ul>
         <!--
           This quote has a Steve-esque level of incredulation:
@@ -652,18 +690,18 @@ for (Item item : basket.getItems()) {
         <h2>Task 6: App dependencies</h2>
         <p>Our app depends on several concrete classes.</p>
         <ul>
-          <li>Creates <code>BasketReader</code>/<code>Writer</code> and <code>Basket</code></li>
+          <li>Creates <code>ItemsReader</code>/<code>Writer</code> and <code>Basket</code></li>
           <li>Goal: depend on reader/writer abstractions</li>
           <li>Goal: use a <code>SaleBasket</code> on weekends</li>
         </ul>
         <pre><code data-trim class="java">
 public class App {
   public void run(Reader input, Writer output) {
-    BasketReader inputReader = new BasketReader();
-    BasketWriter outputWriter = new BasketWriter();
+    ItemsReader itemsReader = new ItemsReader();
+    ReceiptWriter receiptWriter = new ReceiptWriter();
     Basket basket = new Basket();
-    inputReader.read(basket, input);
-    outputWriter.write(basket, output);
+    itemsReader.read(basket, input);
+    receiptWriter.write(basket, output);
   }
 }</code></pre>
       </section>
@@ -671,21 +709,20 @@ public class App {
         <h2>Injecting dependencies</h2>
         <pre style="font-size: 0.5em;"><code data-trim class="java">
 public class App {
-  private final IBasketFactory basketFactory;
-  private final IBasketReader inputReader;
-  private final IBasketWriter outputWriter;
+  // (Fields omitted)
 
-  public App(IBasketFactory basketFactory, IBasketReader inputReader,
-             IBasketWriter outputWriter) {
+  public App(BasketFactoryInterface basketFactory,
+             ItemsReaderInterface itemsReader,
+             ReceiptWriterInterface receiptWriter) {
     this.basketFactory = basketFactory;
-    this.inputReader = inputReader;
-    this.outputWriter = outputWriter;
+    this.itemsReader = itemsReader;
+    this.receiptWriter = receiptWriter;
   }
 
   public void run(Reader input, Writer output) {
     Basket basket = basketFactory.createBasket();
-    inputReader.read(basket, input);
-    outputWriter.write(basket, output);
+    itemsReader.read(basket, input);
+    receiptWriter.write(basket, output);
   }
 }
         </code></pre>
@@ -712,28 +749,7 @@ public class WeekendSaleBasketFactory implements BasketFactory {
   }
 }
         </code></pre>
-      </section>
-      <section>
-        <h2>Basket factory 2</h2>
-        <pre style="font-size: 0.5em;"><code data-trim class="java">
-public class WeekendSaleBasketFactory implements BasketFactory {
-  private LocalDate date;
-
-  public WeekendSaleBasketFactory(LocalDate date) {
-    this.date = date;
-  }
-
-  @Override
-  public Basket createBasket() {
-    if (date.getDayOfWeek() == SATURDAY || date.getDayOfWeek() == SUNDAY) {
-      return new SaleBasket();
-    }
-    else {
-      return new Basket();
-    }
-  }
-}
-        </code></pre>
+        <p>What is the issue with this class?</p>
       </section>
       </section>
 
@@ -782,6 +798,18 @@ public class WeekendSaleBasketFactory implements BasketFactory {
 
           http://www.davesquared.net/2009/01/introduction-to-solid-principles-of-oo.html
         -->
+      </section>
+
+      <section>
+        <h2>The end</h2>
+        <p>What we covered:</p>
+        <ol>
+          <li>What is good design?</li>
+          <li>Motivation for design</li>
+          <li>General guidelines</li>
+          <li>The SOLID principles</li>
+        </ol>
+        <p>What is design's relationship to TDD?</p>
       </section>
 
       <section>
