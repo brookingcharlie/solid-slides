@@ -745,7 +745,28 @@ public class WeekendSaleBasketFactory implements BasketFactory {
       </section>
 
       <section>
+      <section>
         <h2>Why BigDecimal?</h2>
+        <pre><code data-trim class="java">
+public class BasketUsingDoubleTest {
+  @Test
+  public void testInnaccurateBasket() {
+    BasketUsingDouble basket = new BasketUsingDouble();
+    basket.addItem(new ItemUsingDouble("Pizza", 0.10));
+    basket.addItem(new ItemUsingDouble("Coke", 0.20));
+    assertThat(basket.getTotal(), is(equalTo(0.30)));
+  }
+}
+        </code></pre>
+        <pre><code data-trim class="nohighlight">
+testInnaccurateBasket(BasketUsingDoubleTest) &lt;&lt;&lt; FAILURE!
+java.lang.AssertionError:
+Expected: is &lt;0.3&gt;
+     but: was &lt;0.30000000000000004&gt;
+        </code></pre>
+      </section>
+      <section>
+        <h2>Double vs BigDecimal</h2>
         <pre><code data-trim class="java">
 public class DecimalTest {
   @Test
@@ -761,6 +782,7 @@ public class DecimalTest {
   }
 }
         </code></pre>
+      </section>
       </section>
 
     </div>
