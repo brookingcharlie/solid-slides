@@ -554,18 +554,18 @@ public class SaleBasket {
           <li>adding code instead of modifying it</li>
         </ul>
         <!--
-          "You should be able to extend a classes behavior without modifying it."
+          "You should be able to extend a classes behaviour without modifying it."
 
           "When a single change to a program results in a cascade of changes to dependent
           modules, that program exhibits the undesirable attributes that we have come to
           associate with “bad” design. The program becomes fragile, rigid, unpredictable
           and unreusable. The open- closed principle attacks this in a very straightforward
           way. It says that you should design modules that never change. When requirements
-          change, you extend the behavior of such modules by adding new code, not by
+          change, you extend the behaviour of such modules by adding new code, not by
           changing old code that already works."
 
-          "Create abstractions that are fixed and yet represent an unbounded group of possible behaviors.
-          A module depending on an abstraction can be fixed, yet the behavior of that module can be extended
+          "Create abstractions that are fixed and yet represent an unbounded group of possible behaviours.
+          A module depending on an abstraction can be fixed, yet the behaviour of that module can be extended
           by creating new derivatives of the abstraction."
 
           ## Benefits
@@ -598,7 +598,7 @@ public class SaleBasket {
         <h2>Our extensible basket</h2>
         <div style="display: inline-block; width: 48%;">
           <pre style="font-size: 0.50em;"><code data-trim class="java">
-// Add extention point
+// Add extension point
 public class Basket {
   public List&lt;Item&gt; getExtraItems() {
     return Collections.emptyList();
@@ -678,7 +678,7 @@ for (Item item : basket.getItems()) {
 
           "This predicament is absurd! It is the high level modules that ought to be forcing
           the low level modules to change. It is the high level modules that should take
-          precendence over the lower level modules. High level modules simply should not
+          precedence over the lower level modules. High level modules simply should not
           depend upon low level modules in any way."
 
           http://www.butunclebob.com/ArticleS.UncleBob.PrinciplesOfOod
@@ -762,7 +762,7 @@ public class WeekendSaleBasketFactory implements BasketFactory {
           </tr>
           <tr>
             <th>Open-Closed</th>
-            <td>You should be able to extend a class's behavior without modifying it.</td>
+            <td>You should be able to extend a class's behaviour without modifying it.</td>
           </tr>
           <tr>
             <th>Liskov Substitution</th>
