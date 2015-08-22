@@ -89,7 +89,7 @@
       </section>
       <section>
         <h2 style="font-size: 1.45em;">You ain't gonna need it (YAGNI)</h2>
-        <blockquote>"Always implement things when you actually need them, never when you just foresee that you need them." - Ron Jeffries (XP co-founder)</blockquote>
+        <blockquote>"Always implement things when you actually need them, never when you just foresee that you need them."<br>- Ron Jeffries (XP co-founder)</blockquote>
         <ul>
           <li>Wastes time and resources</li>
           <li>Complicates system (violates KISS)</li>
@@ -98,7 +98,7 @@
       </section>
       <section>
         <h2>Don't repeat yourself (DRY)</h2>
-        <blockquote>"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system." - The Pragmatic Programmer</blockquote>
+        <blockquote>"Every piece of knowledge must have a single, unambiguous, authoritative representation within a system."<br>- The Pragmatic Programmer</blockquote>
         <ul>
           <li>Change software in single place</li>
           <li>Methods/functions, code generation, etc</li>
@@ -179,7 +179,7 @@ public void testSingle() throws Exception {
 
       <section>
         <h2>Simple app code</h2>
-        <pre style="font-size: 0.45em;"><code data-trim class="java">
+        <pre style="font-size: 0.52em;"><code data-trim class="java">
 public class App {
   public void run(Reader reader, Writer writer) {
     String line = reader.readLine();
@@ -226,7 +226,7 @@ public class App {
         <ol>
           <li>Model basket concept as domain class</li>
           <li>Make basket responsible for calculating total</li>
-          <li>Read/write text formats in separate class</li>
+          <li>Read items and write receipts in separate classes</li>
         </ol>
       </section>
       <section>
