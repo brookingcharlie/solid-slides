@@ -1,5 +1,5 @@
-# Principle of Software Design
+# Principles of Software Design
 
-Overview of principles for good software design including hands-on exercise referencing test-driven development
+Overview of principles for good software design including hands-on exercises applying the SOLID principles.
 
-To view slides, open [index.html](index.html).
+To view slides, open <index.html>.
